@@ -1,4 +1,4 @@
-from find_and_replace import UpdateStage
+from find_and_replace import FindAndReplace
 
 if __name__ == '__main__':
 
@@ -11,5 +11,5 @@ if __name__ == '__main__':
         return amendment
 
 
-    UpdateStage(input_filename="./14_esito.csv", output_filename="./14_precluso_2.csv") \
+    FindAndReplace(input_filename="./14_esito.csv", output_filename="./14_precluso_2.csv") \
         .find_and_replace(match, update)
