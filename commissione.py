@@ -3,11 +3,7 @@ import csv
 import requests
 from lxml import html
 
-
-def get_amendments_from_csv():
-    with open('amendments_14_with_parties.csv', newline='') as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=',')
-        return [row for row in reader]
+from read_csv import get_amendments_from_csv_as_dict
 
 
 def new_sponsor_from(url):
@@ -17,7 +13,7 @@ def new_sponsor_from(url):
 
 
 if __name__ == '__main__':
-    amendments = get_amendments_from_csv()
+    amendments = get_amendments_from_csv_as_dict('./amendments_14_with_parties.csv')
 
     with open('./amendments_14_updated_commissione.csv', newline='', mode='w+') as csvfile:
         writer = csv.DictWriter(csvfile, delimiter=',', fieldnames=amendments[0].keys())
