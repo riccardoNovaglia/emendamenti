@@ -82,13 +82,13 @@ def update_sponsors_parties(find_and_replace, senators_filename):
 
 
 if __name__ == '__main__':
-    source_dataset = './data/amendments leg 15.csv'
+    source_dataset = './data/amendments leg 16.csv'
 
-    remove_trailing_commas(FindAndReplace(source_dataset, './outputs/15.1_no_commas.csv'))
+    remove_trailing_commas(FindAndReplace(source_dataset, './outputs/16.1_no_commas.csv'))
 
-    update_commissione(FindAndReplace('./outputs/15.1_no_commas.csv', './outputs/15.2_commissione.csv'))
+    update_commissione(FindAndReplace('./outputs/16.1_no_commas.csv', './outputs/16.2_commissione.csv'))
 
-    update_sponsor(FindAndReplace('./outputs/15.2_commissione.csv', './outputs/15.3_sponsors.csv'))
+    update_sponsor(FindAndReplace('./outputs/16.2_commissione.csv', './outputs/16.3_sponsors.csv'))
 
-    update_sponsors_parties(FindAndReplace('./outputs/15.3_sponsors.csv', './outputs/15.final_parties.csv'),
-                            senators_filename='senators_parties_legislature_15.csv')
+    update_sponsors_parties(FindAndReplace('./outputs/16.3_sponsors.csv', './outputs/16.final_parties.csv'),
+                            senators_filename='senators_parties_legislature_16.csv')

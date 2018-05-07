@@ -12,8 +12,17 @@ class FindAndReplace:
 
         amendments = get_amendments_from_csv_as_dict(self.input_filename)
 
+        self._read_and_update(amendments, amendments[0].keys(), match_lambda, update_lambda)
+
+    def find_and_replace_with_headers(self, headers_lambda=lambda x: x, match_lambda=lambda x: True, update_lambda=lambda x: x):
+
+        amendments = get_amendments_from_csv_as_dict(self.input_filename)
+
+        self._read_and_update(amendments, headers_lambda(amendments[0]), match_lambda, update_lambda)
+
+    def _read_and_update(self, amendments, csv_headers, match_lambda, update_lambda):
         with open(self.output_filename, newline='', mode='w+', encoding='utf-8') as csvfile:
-            writer = csv.DictWriter(csvfile, delimiter=',', fieldnames=amendments[0].keys())
+            writer = csv.DictWriter(csvfile, delimiter=',', fieldnames=csv_headers)
             writer.writeheader()
             for i, a in enumerate(amendments):
                 print('{}/{}'.format(i + 1, len(amendments)))
