@@ -11,13 +11,13 @@ class Senator:
 
 
 def get_amendments_from_csv():
-    with open('./data/senato/sen_emendamenti_gov_18.csv', newline='', encoding='utf-8-sig') as csvfile:
+    with open('./data/Senate_amend_legge_quadro_cicli.csv', newline='', encoding='utf-8-sig') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
         return [row for row in reader]
 
 
 def get_senators(legislature_number):
-    with open('./data/senato/leg_{}.csv'.format(legislature_number), newline='') as csvfile:
+    with open('./data/senato/senators_parties_legislature_{}.csv'.format(legislature_number), newline='') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
         return [Senator(row['NAME'], row['PARTIES'].split(',')) for row in reader]
 
@@ -55,28 +55,25 @@ def find_matching_parties(sponsors, legislature_senators):
 
 
 if __name__ == '__main__':
-    legislatures = {
-        # '16': get_senators(16),
-        # '17': get_senators(17),
-        '18': get_senators(18)
-    }
+    # legislatures = {
+    #     # '16': get_senators(16),
+    #     # '17': get_senators(17),
+    #     # '18': get_senators(18)
+    # }
+    senators = get_senators(13)
     amendments_rows = get_amendments_from_csv()
     not_found = set()
 
     for row in amendments_rows:
-        sponsors_list = row['FIRMATARI'].split(', ')
-
-        # legislature = row['Legislatura']
-
-        senators = legislatures.get('18')
+        sponsors_list = row['sponsor'].split(', ')
 
         found_parties = find_matching_parties(sponsors_list, senators)
 
-        row['SPONSOR_PARTIES'] = ';'.join(found_parties)
+        row['sponsor_party'] = ','.join(found_parties)
 
     write_new_rows(
         amendments_rows,
-        './data/senato/with_parties.csv'
+        './data/Senate_amend_legge_quadro_cicli_with_parties.csv'
     )
 
     # print('not found {}:'.format(len(not_found)))
