@@ -1,24 +1,12 @@
 import csv
 
-
-class CommitteeMember:
-    def __init__(self, name):
-        self.name = name
-
-    def __str__(self):
-        return '{}'.format(self.name)
+from structures.CommitteeMember import get_committee_members
 
 
 def get_amendments_from_csv(filename):
     with open(filename, newline='', encoding='utf-8-sig') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
         return [row for row in reader]
-
-
-def get_committee_members(filename):
-    with open(filename, newline='') as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=',')
-        return [CommitteeMember(row['NAME']) for row in reader]
 
 
 def write_new_rows(rows, filename):
@@ -47,8 +35,8 @@ def is_sponsor_member_of_committee(committee_members, sponsors_list):
 
 
 if __name__ == '__main__':
-    committee_members = get_committee_members('./data/senato/committee_members_senate_legislature_13.csv')
-    amendments_rows = get_amendments_from_csv('./data/Senate_amend_legge_quadro_cicli_with_parties.csv')
+    committee_members = get_committee_members('./data/camera_and_parties/committee_members_camera_legislature_13.csv')
+    amendments_rows = get_amendments_from_csv('./data/Chamber_amend_quadro_cicli_updated.csv')
     not_found = set()
 
     for row in amendments_rows:
@@ -58,5 +46,5 @@ if __name__ == '__main__':
 
     write_new_rows(
         amendments_rows,
-        './data/Senate_amend_legge_quadro_cicli_with_parties_committee.csv'
+        './data/Chamber_amend_quadro_cicli_updated.csv'
     )
