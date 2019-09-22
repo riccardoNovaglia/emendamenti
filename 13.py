@@ -17,16 +17,11 @@ def write_new_rows(rows, filename):
         writer.writerows(rows)
 
 
-def names_match(sponsor_name, senator_name):
+def names_match(sponsor_name, senator_surname):
     if sponsor_name.isspace():
         return False
 
-    split_sponsor = sponsor_name.lower().split(' ')
-
-    for name_part in split_sponsor:
-        if name_part not in senator_name.lower():
-            return False
-    return True
+    return sponsor_name.lower() == senator_surname.lower()
 
 
 def find_matching_parties(sponsors, legislature_senators):
@@ -34,7 +29,7 @@ def find_matching_parties(sponsors, legislature_senators):
     for sponsor in sponsors:
         try:
             matching_parties = next(
-                senator.parties for senator in legislature_senators if names_match(sponsor, senator.name))
+                senator.parties for senator in legislature_senators if names_match(sponsor, senator.surname))
             all_matching_parties.extend(matching_parties)
         except StopIteration as stop:
             not_found.add(sponsor)
